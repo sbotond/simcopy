@@ -77,11 +77,59 @@ setConstructorS3(
         translocation=translocation
     );
 
+    this$.processes<-.construct.processes(this)
     return(this)
   },
   enforceRCC=TRUE
 );
 
+# Function constructing processes:
+.construct.processes<-function(this) {
+
+        # Construct processes:
+        processes<-list()
+        if(!is.na(this$deletion$rate)) {
+            del <-.construct.deletor(rate=this$deletion$rate, lenMean=this$deletion$mean, lenMax=this$deletion$max)
+            processes<-c(processes, list(del))
+        }
+
+        if(!is.na(this$duplication$rate)) {
+            dup <-.construct.duplicator(rate=this$duplication$rate, lenMean=this$duplication$mean, lenMax=this$duplication$max)
+            processes<-c(processes, list(dup))
+        }
+
+        if(!is.na(this$inv.duplication$rate)) {
+            inv.dup <-.construct.inv.duplicator(rate=this$inv.duplication$rate, lenMean=this$inv.duplication$mean, lenMax=this$inv.duplication$max)
+            processes<-c(processes, list(inv.dup))
+        }
+
+        if(!is.na(this$inversion$rate)) {
+            inv <-.construct.invertor(rate=this$inversion$rate, lenMean=this$inversion$mean, lenMax=this$inversion$max)
+            processes<-c(processes, list(inv))
+        }
+
+        if(!is.na(this$translocation$rate)) {
+            trl <-.construct.translocator(rate=this$translocation$rate, lenMean=this$translocation$mean, lenMax=this$translocation$max)
+            processes<-c(processes, list(trl))
+        }
+
+        return(processes)
+}
+
+# Set up a truncated geometric+1 distribution according to the
+# specified mean and maximum:
+.setup.ldist<-function(l.mean, l.max=NULL) {
+    if(is.null(l.max)){
+        l.max <- l.mean * 10
+    } 
+    sizes   <- 0:(l.max-1)
+    probs   <- dgeom(sizes, prob=1/l.mean)
+    probs   <- probs/sum(probs)
+    sizes   <- sizes + 1
+    return(
+        list(sizes=sizes, probs=probs)
+    )
+}
 
 ###########################################################################/**
 #
@@ -134,45 +182,30 @@ setMethodS3(
             stop("Tree must be given as an APE phylo object!")
         }
 
+        # Construct the root genome object:
         tmp <- .construct.root(this$root.size)
         root.seq <- tmp$seq
         this$.alphabet <- tmp$alphabet
 
-        if(!is.na(this$deletion$rate)) {
-            del <-.construct.deletor(rate=this$deletion$rate, lenMean=this$deletion$mean, lenMax=this$deletion$max)
-            attachProcess(root.seq, del)
-        }
-
-        if(!is.na(this$duplication$rate)) {
-            dup <-.construct.duplicator(rate=this$duplication$rate, lenMean=this$duplication$mean, lenMax=this$duplication$max)
-            attachProcess(root.seq, dup)
-        }
-
-        if(!is.na(this$inv.duplication$rate)) {
-            inv.dup <-.construct.inv.duplicator(rate=this$inv.duplication$rate, lenMean=this$inv.duplication$mean, lenMax=this$inv.duplication$max)
-            attachProcess(root.seq, inv.dup)
-        }
-
-        if(!is.na(this$inversion$rate)) {
-            inv <-.construct.invertor(rate=this$inversion$rate, lenMean=this$inversion$mean, lenMax=this$inversion$max)
-            attachProcess(root.seq, inv)
-        }
-
-        if(!is.na(this$translocation$rate)) {
-            trl <-.construct.translocator(rate=this$translocation$rate, lenMean=this$translocation$mean, lenMax=this$translocation$max)
-            attachProcess(root.seq, trl)
-        }
-        
+        # Attach the processes to the root genome:
+        setProcesses(root.seq, list(this$.processes))
+       
+        # Construct the Phylosim simulation object: 
         psim<-PhyloSim(root.seq=root.seq, phylo=phylo)
+        # Simulate copy number evolution:
         Simulate(psim, quiet=quiet)
+        # Construct copy number history from the PhyloSim alignment:
         cnh <- .getCnh(this, psim, anc)
         phylo <-psim$phylo
-        phylo$tip.label <- 1:length(phylo$tip.label)
+        fasta <-.buildFasta(this, psim, anc)
         return(
             list(
                 phylo= phylo,
                 aln  = psim$alignment,
-                cnh  = cnh
+                cnh  = cnh,
+                fasta=fasta,
+                phylosim=psim,
+                processes=this$.processes
             ) 
         )
   },
@@ -180,6 +213,49 @@ setMethodS3(
   protected=FALSE,
   overwrite=TRUE,
   conflict="warning"
+);
+
+# Private method constructing fasta from the alignment matrix:
+setMethodS3(
+  ".buildFasta",
+  class="SimCopy",
+  function(
+            object,
+            this,
+    		anc,
+    		...
+  ){
+
+        fasta <- ""
+		if(any(is.na(this$.alignment))){
+			warning("Alignment is undefined, nothing to save!\n");
+			return();
+		}
+		else {
+			if(anc){
+				for(i in 1:dim(this$.alignment)[[1]]){
+					fasta <- paste(fasta, ">",rownames(this$.alignment)[[i]],"\n",sep="");
+					fasta <- paste(fasta, paste(this$.alignment[i,],collapse="\t"),"\n", sep="");
+				}
+			} else {
+				for(i in 1:dim(this$.alignment)[[1]]){
+					name<-rownames(this$.alignment)[[i]];
+					if(!any((length(grep("^Node \\d+$",name,perl=TRUE,value=FALSE)) > 0),(length(grep("^Root node \\d+$",name,perl=TRUE,value=FALSE)) > 0))){
+						fasta<-paste(fasta, ">",name,"\n", sep="");
+						fasta<-paste(fasta, paste(this$.alignment[i,],collapse="\t"),"\n", sep="");
+					}
+
+				}
+			}
+		}
+
+		return(sprintf(fasta));
+  },
+  private=TRUE,
+  protected=FALSE,
+  overwrite=FALSE,
+  conflict="warning",
+  validators=getOption("R.methodsS3:validators:setMethodS3")
 );
 
 # Private method for constructing the copy number history
@@ -292,21 +368,5 @@ setMethodS3(
         "\tMaximum length:\t", l$max,  
         sep="")
         return(t)
-}
-
-
-# Set up a truncated geometric+1 distribution according to the
-# specified mean and maximum:
-.setup.ldist<-function(l.mean, l.max=NULL) {
-    if(is.null(l.max)){
-        l.max <- l.mean * 10
-    } 
-    sizes   <- 0:(l.max-1)
-    probs   <- dgeom(sizes, prob=1/l.mean)
-    probs   <- probs/sum(probs)
-    sizes   <- sizes + 1
-    return(
-        list(sizes=sizes, probs=probs)
-    )
 }
 

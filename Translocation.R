@@ -20,13 +20,12 @@
 .construct.translocator<-function(rate, lenMean, lenMax){
     # Set up sizes and probabilities:
     dist    <- .setup.ldist(lenMean, lenMax)
-    print(dist)
 
     d<-DiscreteInsertor(
         rate    =rate,
         sizes   =dist$sizes,
         probs   =dist$probs,
-        template.seq=Sequence(lenght=1) # We will not use this.
+        template.seq=Sequence(length=1) # We will not use this.
     )
 
     d$.handler.template<-function(event=NA) {
