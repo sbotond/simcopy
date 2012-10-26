@@ -22,7 +22,7 @@ pkg: *.R cat rd
 	cp *.R pkg/R/
 	R CMD build pkg
 checkpkg: pkg 
-	R CMD check $(PKG)
+	R CMD check --as-cran $(PKG)
 clean:
 	(rm -f *.log;rm -f SimCopySource.R; rm -f  $(PKG);rm -f -r ./simcopy.Rcheck; rm -f ./pkg/man/*; rm -f ./pkg/R/*.R;true ) 2>&1 > /dev/null
 inst: pkg
