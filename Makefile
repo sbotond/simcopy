@@ -1,5 +1,5 @@
 
-.PHONY: ct cat com push gt checkpkg clean remove aareload
+.PHONY: ct cat com push gt checkpkg clean remove 
 PKG=simcopy_0.1.tar.gz
 
 ct:
