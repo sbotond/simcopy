@@ -248,6 +248,9 @@ setConstructorS3(
 # Set up a truncated geometric+1 distribution according to the
 # specified mean and maximum:
 .setup.ldist<-function(l.mean, l.max=NULL) {
+    if(is.na(l.mean) || l.mean < 1) {
+        stop("Illegal mean length: ", l.mean)
+    }
     if(is.null(l.max)){
         l.max <- l.mean * 10
     } 
