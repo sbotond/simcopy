@@ -56,8 +56,10 @@
 #
 #   \itemize{
 #   \item \code{cnh} - a data frame containing the simulated copy number profiles.
-#   \item \code{aln} - the simulated genomic region alignment as reported by \link{Simulate.PhyloSim}.
+#   \item \code{aln} - the simulated genomic region alignment as reported by \link{Simulate.PhyloSim}. 
+#   Note that any element containing only dashes represents a single gap.
 #   \item \code{fasta} - a string containing the simulated alignment in a fasta-like format.
+#   Note that any element containing only dashes represents a single gap.
 #   \item \code{phylo} - the \code{phylo} object used for simulation. It might be in different order than the object specifed as argument.
 #   \item \code{phylosim} - the \pkg{\link{PhyloSim}} object used for simulation.
 #   \item \code{processes} - the \pkg{\link{PhyloSim}} processes used during the simulation.
@@ -291,7 +293,9 @@ setConstructorS3(
 #   \itemize{
 #   \item \code{cnh} - a data frame containing the simulated copy number profiles.
 #   \item \code{aln} - the simulated genomic region alignment as reported by \link{Simulate.PhyloSim}.
+#   Note that any element containing only dashes represents a single gap.
 #   \item \code{fasta} - a string containing the simulated alignment in a fasta-like format.
+#   Note that any element containing only dashes represents a single gap.
 #   \item \code{phylo} - the \code{phylo} object used for simulation. It might be in different order than the object specifed as argument.
 #   \item \code{phylosim} - the \pkg{\link{PhyloSim}} object used for simulation.
 #   \item \code{processes} - the \pkg{\link{PhyloSim}} processes used during the simulation.
