@@ -3,6 +3,11 @@ SimCopy
 
 <tt>SimCopy</tt> is an <tt>R</tt> package simulating copy number evolution along a tree. 
 
+Download an install
+-------------------
+
+The released packages are available from the [download page](http://github.com/sbotond/simcopy/downloads).
+
 Building from source
 ------------------------
 
