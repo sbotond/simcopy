@@ -6,7 +6,7 @@ SimCopy
 Download an install
 -------------------
 
-The released packages are available from the [download page](http://github.com/sbotond/simcopy/downloads).
+The released packages are available from the [release directory](https://github.com/sbotond/simcopy/tree/master/releases).
 
 Building from source
 ------------------------

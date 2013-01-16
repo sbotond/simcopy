@@ -1,6 +1,6 @@
 
 .PHONY: ct cat com push gt checkpkg clean remove 
-PKG=simcopy_0.1.tar.gz
+PKG=simcopy_0.2.tar.gz
 
 ct:
 	git log --graph
