@@ -22,9 +22,10 @@ Examples
 
 tree<-rcoal(2)  # We will use this tiny tree in the examples below.
 rate<-0.08      # Common rate for the small examples.
-#
-# Simulating deletions and dealing with the results:
+
+## Simulating deletions and dealing with the results:
 cat("\nSimulating deletions:\n")
+
 # Construct a SimCopy object:
 sc <- SimCopy(
     root.size=40,
@@ -32,6 +33,7 @@ sc <- SimCopy(
  )
 # Run simulation:
 res<-Simulate(sc, tree)
+
 # Deal with the simulation results:
 print(res$aln)  # print out the simulated alignment
 print(res$cnh)  # print out the simulated copy number history
@@ -39,36 +41,41 @@ print(res$fasta)# print out the fasta alignment
 summary(res$phylosim) # get the details of the PhyloSim object used for simulations
 summary(res$processes[[1]]) # get the details of the deletion process
 plot(res$processes[[1]])    # plot the distribution of deletion lengths
-#
-# Simulate duplications and print out the resulting alignment:
+
+## Simulate duplications and print out the resulting alignment:
 cat("\nSimulating duplications:\n")
+
 # Construct a SimCopy object:
 sc <- SimCopy(
     root.size=20,
     duplication=list(rate=rate, mean=2)
  )
 print( Simulate(sc, tree)$aln )
-#
-# Simulate inverted duplications and print out the resulting alignment:
+
+## Simulate inverted duplications and print out the resulting alignment:
 cat("\nSimulating inverted duplications:\n")
+
 # Construct a SimCopy object:
 sc <- SimCopy(
     root.size=20,
     inv.duplication=list(rate=rate, mean=2)
  )
 print( Simulate(sc, tree)$aln )
-#
-# Simulate inversions and print out the resulting alignment:
+
+
+## Simulate inversions and print out the resulting alignment:
 cat("\nSimulating inversions:\n")
+
 # Construct a SimCopy object:
 sc <- SimCopy(
     root.size=20,
     inversion=list(rate=rate, mean=2)
  )
 print( Simulate(sc, tree)$aln )
-#
-# Simulate translocations and print out the resulting alignment:
+
+## Simulate translocations and print out the resulting alignment:
 cat("\nSimulating translocations:\n")
+
 # Construct a SimCopy object:
 sc <- SimCopy(
     root.size=20,
