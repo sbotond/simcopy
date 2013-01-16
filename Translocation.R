@@ -62,6 +62,11 @@
 				  if(process$.accept.by(process=process,sequence,window)){
 							details$accepted<-TRUE;
                             len      <- proposeLength(process)
+                            if(len >= sequence$.length){
+                                # There is not much to do when the length of the proposed
+                                # translocation is greater than the sequence length:
+                                return(details)
+                            }
                             orig.pos <- sample(1:(sequence$.length-len+1), 1, replace=FALSE)
                             insert   <- copySubSequence(sequence, orig.pos:(orig.pos + len -1))
 							details$length<-insert$length;
