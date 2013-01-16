@@ -2,6 +2,7 @@ SimCopy
 =======
 
 <tt>SimCopy</tt> is an <tt>R</tt> package simulating the evolution of copy number profiles along a tree. 
+It relies on the [PhyloSim](http://github.com/sbotond/phylosim) package for performing the simulations by encoding the genomic regions as sites in sequences and using modified processes acting on them. Please refer to the package manual for further details.
 
 Download an install
 -------------------
