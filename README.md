@@ -1,7 +1,7 @@
 SimCopy
 =======
 
-<tt>SimCopy</tt> is an <tt>R</tt> package simulating copy number evolution along a tree. 
+<tt>SimCopy</tt> is an <tt>R</tt> package simulating the evolution of copy number profiles along a tree. 
 
 Download an install
 -------------------

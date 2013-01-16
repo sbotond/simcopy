@@ -1,15 +1,14 @@
 Package: simcopy
-Version: 0.1
+Version: 0.2
 Date: 2012-10-25
 Title: A package for simulating copy number evolution
-Author: Botond Sipos <sbotond@ebi.ac.uk>, Roland Schwarz <rfs@ebi.ac.uk>
-Maintainer: Roland Schwarz <rfs@ebi.ac.uk>
+Author: Botond Sipos <sbotond@ebi.ac.uk>
+Maintainer: Botond Sipos <sbotond@ebi.ac.uk>
 Depends: R (>= 2.11.1), R.oo (>= 1.4.6), ape (>= 2.3), phylosim (>= 0.12)
 Suggests:
 Imports: R.oo, ape, phylosim
 Description: simcopy
 License: GPL (>= 3)
-URL: http://www.ebi.ac.uk/goldman-srv/simcopy
-DevelURL: http://github.com/sbotond/simcopy
+URL: http://github.com/sbotond/simcopy
 LazyLoad: TRUE
-Packaged: 2012-10-27 03:03:27 UTC; sb
+Packaged: 2013-01-15 03:03:27 UTC; sb

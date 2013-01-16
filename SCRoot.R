@@ -124,7 +124,7 @@ setMethodS3(
 # @title "The root class for all simcopy objects"
 # 
 # \description{ 
-#		The root class for all simcopy objects containig some utility methods. 
+#		The root class for all simcopy objects containing some utility methods. 
 #		@classhierarchy
 # }
 #	
@@ -412,7 +412,7 @@ setMethodS3(
 #	setComments(o,"Random comment")
 #	# get the comment 
 #	getComments(o)
-#	# get/set the comment via virtual fiels
+#	# get/set the comment via virtual fields
 #	o$comments<-"Second random comment"
 #	o$comments
 # } 
@@ -473,7 +473,7 @@ setMethodS3(
 #	setComments(o,"Random comment")
 #	# get the comment 
 #	getComments(o)
-#	# get/set the comment via virtual fiels
+#	# get/set the comment via virtual fields
 #	o$comments<-"Second random comment"
 #	o$comments
 # } 
@@ -576,7 +576,7 @@ setMethodS3(
 # 
 # \description{ 
 #	@get "title".
-#	SCRoot objects accanot be NA, so this method always returns FALSE.
+#	SCRoot objects cannot be NA, so this method always returns FALSE.
 # } 
 # 
 # @synopsis 
