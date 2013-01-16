@@ -20,6 +20,9 @@ Examples
 # The following tiny examples illustrate the
 # effects of individual processes:    
 
+# Load simcopy:
+library(simcopy)
+
 tree<-rcoal(2)  # We will use this tiny tree in the examples below.
 rate<-0.08      # Common rate for the small examples.
 
@@ -83,9 +86,9 @@ sc <- SimCopy(
  )
 print( Simulate(sc, tree)$aln )
 
-# In the following simulation we will use all the processes above 
-# and we will attempt to recover the topology using simple hierarchical
-# clustering of the copy number profiles.
+## In the following simulation we will use all the processes above 
+## and we will attempt to recover the topology using simple hierarchical
+## clustering of the copy number profiles.
 
 tree<-rcoal(6)
 rate<-0.05
@@ -102,6 +105,7 @@ res<-Simulate(sc, tree, anc=FALSE) # discard internal nodes
 # Print out the simulate genomic region alignment through
 # the underlying PhyloSim object:
 plot(res$phylosim)
+
 # Calculate distances between copy number profiles:
 d<-dist(res$cnh)
 
