@@ -1,3 +1,5 @@
+![heading](https://raw.github.com/sbotond/simcopy/master/misc/heading.png)
+
 SimCopy
 =======
 
