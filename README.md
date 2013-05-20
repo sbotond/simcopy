@@ -8,6 +8,8 @@ It relies on the [PhyloSim](http://github.com/sbotond/phylosim) package for perf
 
 <tt>SimCopy</tt> was brought to you by the [Goldman group](http://www.ebi.ac.uk/goldman) from [EMBL-EBI](http://www.ebi.ac.uk).
 
+[![Catalogued on GSR](http://popmodels.cancercontrol.cancer.gov/static/img/gsr_tile.jpg)](http://popmodels.cancercontrol.cancer.gov/gsr/packages/simcopy)
+
 Download an install
 -------------------
 
